@@ -152,7 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
     showCover: true,
     mobileScrollSupport: false,
     swipeDistance: 50,
-    // IMPORTANT: allow content to get clicks and don't flip on simple taps/clicks
     clickEventForward: true,
     disableFlipByClick: true,
     usePortrait: true,
@@ -172,7 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const href = link.getAttribute('href');
     if (!href || href === '#') return;
 
-    // Stop PageFlip and default interference, then navigate ourselves
     e.preventDefault();
     e.stopPropagation();
 
@@ -182,22 +180,31 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       window.location.href = href;
     }
-  });
+  }, true); // Added capture phase
 
   // ========================================
-  // PREVENT FLIPS ON INTERACTIVE ELEMENTS (MOUSE)
+  // PREVENT FLIPS ON INTERACTIVE ELEMENTS
   // ========================================
+  const interactiveSelector = '.gear-tile, .info-tile, button, a, [role="button"]';
+  
   book.addEventListener('mousedown', e => {
-    if (e.target.closest('.gear-tile, .info-tile, button, a, [role="button"]')) {
+    if (e.target.closest(interactiveSelector)) {
       e.stopPropagation();
     }
   }, true);
 
   book.addEventListener('mouseup', e => {
-    if (e.target.closest('.gear-tile, .info-tile, button, a, [role="button"]')) {
+    if (e.target.closest(interactiveSelector)) {
       e.stopPropagation();
     }
   }, true);
+
+  // Also prevent touch events on interactive elements
+  book.addEventListener('touchstart', e => {
+    if (e.target.closest(interactiveSelector)) {
+      e.stopPropagation();
+    }
+  }, { capture: true, passive: false });
 
   const total = flipbook.getPageCount();
   if (pageTotal) pageTotal.textContent = total;
@@ -218,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
     nextBtn?.setAttribute('disabled', '');
     
     if (flipTimer) clearTimeout(flipTimer);
-    flipTimer = setTimeout(unlock, 1000);
+    flipTimer = setTimeout(unlock, 800); // Increased from 1000 to be more responsive
     
     return true;
   }
@@ -235,8 +242,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function flip(action) {
     if (!lock()) return;
-    try { flipbook.stopFlip?.(); } catch {}
-    action();
+    try { 
+      flipbook.stopFlip?.(); 
+    } catch {}
+    
+    try {
+      action();
+    } catch (error) {
+      console.error('Flip error:', error);
+      unlock(); // Make sure to unlock if flip fails
+    }
   }
 
   // ========================================
@@ -257,7 +272,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   flipbook.on('changeState', event => {
-    if (event.data === 'read') unlock();
+    if (event.data === 'read') {
+      unlock();
+    }
+  });
+
+  // Add additional safety unlock
+  flipbook.on('changeOrientation', () => {
+    unlock();
   });
 
   // ========================================
@@ -274,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.addEventListener('keydown', e => {
-    if (!book.matches(':focus-within')) return;
+    if (!book.matches(':focus-within') && document.activeElement !== document.body) return;
     
     if (e.key === 'ArrowLeft') {
       e.preventDefault();
@@ -292,14 +314,19 @@ document.addEventListener('DOMContentLoaded', () => {
   let dragX = null;
   let dragY = null;
   let dragging = false;
+  let dragTarget = null;
   const isMobile = 'ontouchstart' in window;
+  const DRAG_THRESHOLD = 15;
+  const FLIP_THRESHOLD = 50;
 
   function startDrag(x, y, target) {
     // Exclude interactive elements from drag interactions
-    if (target.closest('.gear-tile, .info-tile, button, a, [role="button"]') || flipping) return false;
+    if (target.closest(interactiveSelector) || flipping) return false;
+    
     dragX = x;
     dragY = y;
     dragging = false;
+    dragTarget = target;
     return true;
   }
 
@@ -311,27 +338,27 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Ignore vertical scrolls
     if (deltaY > 30 && deltaY > deltaX) {
-      dragX = null;
+      cancelDrag();
       return;
     }
     
-    if (deltaX > 15) {
+    if (deltaX > DRAG_THRESHOLD) {
       dragging = true;
       if (!isMobile) book.style.cursor = 'grabbing';
     }
   }
 
   function endDrag(x) {
-    if (dragX === null || !dragging) {
-      dragX = null;
-      dragging = false;
-      if (!isMobile) book.style.cursor = 'grab';
+    if (dragX === null) return;
+    
+    if (!dragging) {
+      cancelDrag();
       return;
     }
 
     const delta = x - dragX;
     
-    if (Math.abs(delta) > 50) {
+    if (Math.abs(delta) > FLIP_THRESHOLD) {
       if (delta < 0) {
         flip(() => flipbook.flipNext());
       } else {
@@ -339,13 +366,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    cancelDrag();
+  }
+
+  function cancelDrag() {
     dragX = null;
+    dragY = null;
     dragging = false;
+    dragTarget = null;
     if (!isMobile) book.style.cursor = 'grab';
   }
 
   // Mouse events
   book.addEventListener('mousedown', e => {
+    // Only handle left clicks
+    if (e.button !== 0) return;
+    
     if (startDrag(e.clientX, e.clientY, e.target)) {
       hideHints();
     }
@@ -360,15 +396,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   book.addEventListener('mouseleave', () => {
-    if (dragX !== null) {
-      dragX = null;
-      dragging = false;
-      if (!isMobile) book.style.cursor = 'grab';
-    }
+    cancelDrag();
   });
 
   // Touch events
   book.addEventListener('touchstart', e => {
+    if (e.target.closest(interactiveSelector)) return;
+    
     const touch = e.touches[0];
     if (startDrag(touch.clientX, touch.clientY, e.target)) {
       hideHints();
@@ -387,6 +421,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const touch = e.changedTouches[0];
       endDrag(touch.clientX);
     }
+  });
+
+  book.addEventListener('touchcancel', () => {
+    cancelDrag();
   });
 
   // Set initial cursor
