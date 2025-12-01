@@ -161,6 +161,12 @@ document.addEventListener('DOMContentLoaded', () => {
   flipbook.loadFromHTML(pages);
   window.flipRef = flipbook;
 
+  const total = flipbook.getPageCount();
+  if (pageTotal) pageTotal.textContent = total;
+
+  console.log(`PageFlip initialized with ${total} pages`);
+  console.log('Initial page index:', flipbook.getCurrentPageIndex());
+
   // ========================================
   // FORCE LINKS INSIDE BOOK TO NAVIGATE (MOBILE + DESKTOP)
   // ========================================
@@ -180,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       window.location.href = href;
     }
-  }, true); // Added capture phase
+  }, true);
 
   // ========================================
   // PREVENT FLIPS ON INTERACTIVE ELEMENTS
@@ -199,58 +205,64 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, true);
 
-  // Also prevent touch events on interactive elements
   book.addEventListener('touchstart', e => {
     if (e.target.closest(interactiveSelector)) {
       e.stopPropagation();
     }
   }, { capture: true, passive: false });
 
-  const total = flipbook.getPageCount();
-  if (pageTotal) pageTotal.textContent = total;
-
-  console.log(`PageFlip initialized with ${total} pages`);
-
   // ========================================
-  // FLIP STATE CONTROL
+  // FLIP STATE CONTROL - SIMPLIFIED
   // ========================================
   let flipping = false;
-  let flipTimer = null;
 
-  function lock() {
-    if (flipping) return false;
-    flipping = true;
-    
-    prevBtn?.setAttribute('disabled', '');
-    nextBtn?.setAttribute('disabled', '');
-    
-    if (flipTimer) clearTimeout(flipTimer);
-    flipTimer = setTimeout(unlock, 800); // Increased from 1000 to be more responsive
-    
-    return true;
+  function canFlip() {
+    return !flipping;
   }
 
-  function unlock() {
+  function startFlip() {
+    flipping = true;
+    prevBtn?.setAttribute('disabled', '');
+    nextBtn?.setAttribute('disabled', '');
+    console.log('Flip started, buttons disabled');
+  }
+
+  function endFlip() {
     flipping = false;
     prevBtn?.removeAttribute('disabled');
     nextBtn?.removeAttribute('disabled');
-    if (flipTimer) {
-      clearTimeout(flipTimer);
-      flipTimer = null;
-    }
+    console.log('Flip ended, buttons enabled');
   }
 
-  function flip(action) {
-    if (!lock()) return;
-    try { 
-      flipbook.stopFlip?.(); 
-    } catch {}
-    
+  // Safety timeout to prevent permanent lock
+  function safeFlip(action, actionName = 'flip') {
+    if (!canFlip()) {
+      console.log('Flip blocked - already flipping');
+      return;
+    }
+
+    const currentPage = flipbook.getCurrentPageIndex();
+    console.log(`${actionName} requested from page ${currentPage}`);
+
+    startFlip();
+
+    // Safety timeout
+    const safetyTimer = setTimeout(() => {
+      console.warn('Flip safety timeout triggered');
+      endFlip();
+    }, 2000);
+
     try {
       action();
+      // Clear safety timer after a short delay to allow flip to complete
+      setTimeout(() => {
+        clearTimeout(safetyTimer);
+        endFlip();
+      }, 700); // Slightly longer than flippingTime
     } catch (error) {
       console.error('Flip error:', error);
-      unlock(); // Make sure to unlock if flip fails
+      clearTimeout(safetyTimer);
+      endFlip();
     }
   }
 
@@ -259,6 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ========================================
   function sync(event) {
     const idx = event?.data ?? flipbook.getCurrentPageIndex();
+    console.log('Syncing UI to page:', idx);
     updateUI(idx);
     showHints(idx, total);
   }
@@ -266,32 +279,56 @@ document.addEventListener('DOMContentLoaded', () => {
   sync();
 
   flipbook.on('flip', event => {
+    console.log('Flip event:', event.data);
     sync(event);
     hideHints();
-    unlock();
+    endFlip();
   });
 
   flipbook.on('changeState', event => {
+    console.log('State changed:', event.data);
     if (event.data === 'read') {
-      unlock();
+      endFlip();
     }
   });
 
-  // Add additional safety unlock
   flipbook.on('changeOrientation', () => {
-    unlock();
+    console.log('Orientation changed');
+    endFlip();
   });
 
   // ========================================
   // NAVIGATION
   // ========================================
-  prevBtn?.addEventListener('click', () => flip(() => flipbook.flipPrev()));
-  nextBtn?.addEventListener('click', () => flip(() => flipbook.flipNext()));
+  prevBtn?.addEventListener('click', (e) => {
+    console.log('Prev button clicked');
+    e.preventDefault();
+    const currentPage = flipbook.getCurrentPageIndex();
+    if (currentPage > 0) {
+      safeFlip(() => flipbook.flipPrev(), 'flipPrev');
+    } else {
+      console.log('Already at first page');
+    }
+  });
+
+  nextBtn?.addEventListener('click', (e) => {
+    console.log('Next button clicked');
+    e.preventDefault();
+    const currentPage = flipbook.getCurrentPageIndex();
+    if (currentPage < total - 1) {
+      safeFlip(() => flipbook.flipNext(), 'flipNext');
+    } else {
+      console.log('Already at last page');
+    }
+  });
 
   dots.forEach(dot => {
     dot.addEventListener('click', () => {
       const idx = Number(dot.dataset.index);
-      if (!isNaN(idx)) flip(() => flipbook.flip(idx));
+      console.log('Dot clicked, target page:', idx);
+      if (!isNaN(idx)) {
+        safeFlip(() => flipbook.flip(idx), `flip to ${idx}`);
+      }
     });
   });
 
@@ -300,11 +337,19 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (e.key === 'ArrowLeft') {
       e.preventDefault();
-      flip(() => flipbook.flipPrev());
+      console.log('Left arrow pressed');
+      const currentPage = flipbook.getCurrentPageIndex();
+      if (currentPage > 0) {
+        safeFlip(() => flipbook.flipPrev(), 'flipPrev (keyboard)');
+      }
     }
     if (e.key === 'ArrowRight') {
       e.preventDefault();
-      flip(() => flipbook.flipNext());
+      console.log('Right arrow pressed');
+      const currentPage = flipbook.getCurrentPageIndex();
+      if (currentPage < total - 1) {
+        safeFlip(() => flipbook.flipNext(), 'flipNext (keyboard)');
+      }
     }
   });
 
@@ -314,19 +359,16 @@ document.addEventListener('DOMContentLoaded', () => {
   let dragX = null;
   let dragY = null;
   let dragging = false;
-  let dragTarget = null;
   const isMobile = 'ontouchstart' in window;
   const DRAG_THRESHOLD = 15;
   const FLIP_THRESHOLD = 50;
 
   function startDrag(x, y, target) {
-    // Exclude interactive elements from drag interactions
     if (target.closest(interactiveSelector) || flipping) return false;
     
     dragX = x;
     dragY = y;
     dragging = false;
-    dragTarget = target;
     return true;
   }
 
@@ -336,7 +378,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const deltaX = Math.abs(x - dragX);
     const deltaY = Math.abs(y - dragY);
     
-    // Ignore vertical scrolls
     if (deltaY > 30 && deltaY > deltaX) {
       cancelDrag();
       return;
@@ -357,12 +398,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const delta = x - dragX;
+    const currentPage = flipbook.getCurrentPageIndex();
     
     if (Math.abs(delta) > FLIP_THRESHOLD) {
-      if (delta < 0) {
-        flip(() => flipbook.flipNext());
-      } else {
-        flip(() => flipbook.flipPrev());
+      if (delta < 0 && currentPage < total - 1) {
+        console.log('Drag flip next');
+        safeFlip(() => flipbook.flipNext(), 'flipNext (drag)');
+      } else if (delta > 0 && currentPage > 0) {
+        console.log('Drag flip prev');
+        safeFlip(() => flipbook.flipPrev(), 'flipPrev (drag)');
       }
     }
 
@@ -373,13 +417,11 @@ document.addEventListener('DOMContentLoaded', () => {
     dragX = null;
     dragY = null;
     dragging = false;
-    dragTarget = null;
     if (!isMobile) book.style.cursor = 'grab';
   }
 
   // Mouse events
   book.addEventListener('mousedown', e => {
-    // Only handle left clicks
     if (e.button !== 0) return;
     
     if (startDrag(e.clientX, e.clientY, e.target)) {
@@ -427,8 +469,19 @@ document.addEventListener('DOMContentLoaded', () => {
     cancelDrag();
   });
 
-  // Set initial cursor
   if (!isMobile) book.style.cursor = 'grab';
 
   console.log('✅ Flipbook fully initialized');
+  
+  // Expose debug function
+  window.debugFlipbook = () => {
+    console.log('=== FLIPBOOK DEBUG ===');
+    console.log('Total pages:', total);
+    console.log('Current page:', flipbook.getCurrentPageIndex());
+    console.log('Is flipping:', flipping);
+    console.log('PageFlip object:', flipbook);
+    console.log('Methods available:', Object.keys(flipbook));
+  };
+  
+  console.log('Type window.debugFlipbook() to see flipbook state');
 });
