@@ -152,7 +152,9 @@ document.addEventListener('DOMContentLoaded', () => {
     showCover: true,
     mobileScrollSupport: false,
     swipeDistance: 50,
-    clickEventForward: false,
+    // IMPORTANT: allow content to get clicks and don't flip on simple taps/clicks
+    clickEventForward: true,
+    disableFlipByClick: true,
     usePortrait: true,
     autoSize: true,
   });
@@ -161,7 +163,29 @@ document.addEventListener('DOMContentLoaded', () => {
   window.flipRef = flipbook;
 
   // ========================================
-  // PREVENT FLIPS ON INTERACTIVE ELEMENTS
+  // FORCE LINKS INSIDE BOOK TO NAVIGATE (MOBILE + DESKTOP)
+  // ========================================
+  book.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href]');
+    if (!link) return;
+
+    const href = link.getAttribute('href');
+    if (!href || href === '#') return;
+
+    // Stop PageFlip and default interference, then navigate ourselves
+    e.preventDefault();
+    e.stopPropagation();
+
+    const target = link.getAttribute('target');
+    if (target && target !== '_self') {
+      window.open(href, target);
+    } else {
+      window.location.href = href;
+    }
+  });
+
+  // ========================================
+  // PREVENT FLIPS ON INTERACTIVE ELEMENTS (MOUSE)
   // ========================================
   book.addEventListener('mousedown', e => {
     if (e.target.closest('.gear-tile, .info-tile, button, a, [role="button"]')) {
