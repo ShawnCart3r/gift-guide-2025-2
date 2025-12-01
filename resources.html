@@ -1,0 +1,623 @@
+<!-- ================================
+     Fitness Hacks For Life — Resources (scoped)
+     Paste this whole block into WP. Safe/isolated styles.
+================================== -->
+<section id="fth-resources" role="region" aria-label="Mental Health & Safety Resources">
+  <style>
+    /* ---- SCOPE EVERYTHING UNDER #fth-resources ---- */
+    #fth-resources * { box-sizing: border-box; }
+    #fth-resources { --bg: #fff; --ink:#222; --muted:#666; --card:#f7f7f9; --accent:#0ea5e9; --ok:#16a34a; --warn:#b45309; --ring:rgba(14,165,233,.35); --radius:14px; color:var(--ink); background:transparent; }
+    #fth-resources a { color: inherit; text-decoration: none; }
+    #fth-resources a.fth-link { color: var(--accent); text-decoration: underline; }
+    #fth-resources .fth-wrap { max-width: 1100px; margin: 0 auto; padding: clamp(16px,3vw,28px); }
+    #fth-resources h2, #fth-resources h3 { margin: 0 0 .5rem; line-height: 1.2; }
+    #fth-resources h2 { font-size: clamp(1.5rem, 2.3vw, 2rem); }
+    #fth-resources h3 { font-size: clamp(1.05rem, 1.6vw, 1.2rem); }
+    #fth-resources p { margin: .35rem 0 0; color: var(--muted); }
+    /* Crisis banner */
+    #fth-resources .fth-alert {
+      background: #fef3c7; border: 1px solid #f59e0b; color:#92400e;
+      padding: 14px 16px; border-radius: var(--radius); margin: 14px 0 18px;
+      display: grid; gap: 8px;
+    }
+    #fth-resources .fth-alert .fth-ribbon { display:inline-flex; align-items:center; gap:.5rem; font-weight:600; color:#065f46; }
+    #fth-resources .fth-alert .badge { display:inline-block; padding:.2rem .5rem; border-radius:999px; background:#10b9811a; border:1px solid #10b98155; }
+    #fth-resources .fth-hotlines { display:flex; flex-wrap:wrap; gap:10px 14px; }
+    #fth-resources .fth-hotlines a { display:inline-flex; align-items:center; gap:.5rem; padding:.4rem .6rem; border-radius:10px; background:#fff; border:1px solid #f59e0b55; }
+    #fth-resources .fth-hotlines kbd { font-family:inherit; background:#fde68a; padding:.05rem .35rem; border-radius:6px; border:1px solid #f59e0b; }
+    /* Controls */
+    #fth-resources .fth-controls { display:grid; gap:10px; grid-template-columns: 1fr; margin: 14px 0 18px; }
+    #fth-resources .fth-controls .row { display:flex; gap:10px; flex-wrap:wrap; }
+    #fth-resources input[type="search"], #fth-resources select, #fth-resources button {
+      border-radius: 12px; border:1px solid #e5e7eb; padding:.6rem .75rem; background:#fff;
+    }
+    #fth-resources input[type="search"]:focus, #fth-resources select:focus, #fth-resources button:focus {
+      outline: 2px solid var(--ring);
+    }
+    #fth-resources .fth-chip {
+      display:inline-flex; align-items:center; gap:.4rem; padding:.35rem .6rem; border-radius:999px; background:#e0f2fe; border:1px solid #bae6fd; color:#075985; font-size:.9rem;
+    }
+    #fth-resources .fth-clear { background:#f9fafb; cursor:pointer; }
+    #fth-resources .fth-count { margin-left:auto; color:var(--muted); }
+    /* Accordion groups */
+    #fth-resources .fth-accordion { border-radius: var(--radius); overflow: hidden; border:1px solid #ececf1; background:var(--card); }
+    #fth-resources .fth-item { border-top:1px solid #ececf1; }
+    #fth-resources .fth-item:first-child { border-top:0; }
+    #fth-resources .fth-head {
+      width:100%; background:#fff; border:0; text-align:left; padding:14px 16px; cursor:pointer; display:flex; align-items:center; gap:10px;
+    }
+    #fth-resources .fth-head:hover { background:#fafafa; }
+    #fth-resources .fth-caret { transition: transform .2s ease; }
+    #fth-resources .fth-item[aria-expanded="true"] .fth-caret { transform: rotate(90deg); }
+    #fth-resources .fth-body { display:none; padding: 0 16px 14px; background: var(--card); }
+    #fth-resources .fth-item[aria-expanded="true"] .fth-body { display:block; }
+    /* Lists inside sections */
+    #fth-resources .fth-list { list-style:none; margin: 10px 0 0; padding:0; display:grid; gap:10px; }
+    #fth-resources .fth-row {
+      display:grid; gap:8px; padding:12px; border-radius:12px; border:1px solid #e5e7eb; background:#fff;
+    }
+    #fth-resources .fth-row:hover { border-color:#d1d5db; }
+    #fth-resources .fth-row .fth-title { display:flex; align-items:baseline; gap:.5rem; }
+    #fth-resources .fth-row .fth-title a { font-weight:600; }
+    #fth-resources .fth-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+    #fth-resources .fth-tag { font-size:.8rem; padding:.15rem .45rem; border-radius:999px; background:#f1f5f9; border:1px solid #e2e8f0; color:#334155; }
+    /* Footer CTA */
+    #fth-resources .fth-footer {
+      margin-top: 18px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; background:#f0f9ff; border:1px solid #bae6fd; padding:12px 14px; border-radius:var(--radius);
+    }
+    #fth-resources .fth-btn {
+      display:inline-flex; align-items:center; gap:.6rem; border-radius:999px; padding:.6rem .9rem; background:var(--accent); color:#fff; border:1px solid #0284c7; text-decoration:none;
+    }
+    /* Responsive tweaks */
+    @media (min-width: 720px) {
+      #fth-resources .fth-controls { grid-template-columns: 1fr auto; align-items:center; }
+    }
+  </style>
+
+  <div class="fth-wrap">
+    <header>
+      <h2>Resources</h2>
+      <p>Curated support for mental health, safety, legal help, and community wellbeing.</p>
+    </header>
+
+    <!-- Crisis banner -->
+    <aside class="fth-alert" aria-live="polite">
+      <div class="fth-ribbon"><span class="badge">🎗️ Green Ribbon</span> More than half of Americans will be diagnosed with a mental health issue during their lifetime.</div>
+      <div><strong>In crisis?</strong> Call or text <kbd>988</kbd> (Suicide &amp; Crisis Lifeline). If outside the U.S., contact your local emergency number.</div>
+      <div class="fth-hotlines">
+        <a href="tel:988" aria-label="Call 988">📞 988</a>
+        <a href="sms:988" aria-label="Text 988">💬 Text 988</a>
+        <a href="tel:18002738255" aria-label="Call National Suicide Prevention number">📞 1-800-273-TALK (8255)</a>
+        <a href="tel:18006564673" aria-label="Call National Sexual Assault Hotline">📞 National Sexual Assault Hotline 1-800-656-HOPE</a>
+      </div>
+    </aside>
+
+    <!-- Controls -->
+    <div class="fth-controls" role="search">
+      <div class="row">
+        <input id="fth-q" type="search" placeholder="Search by name or keyword…" aria-label="Search resources">
+        <select id="fth-cat" aria-label="Filter by category">
+          <option value="all">All categories</option>
+          <option value="general">General Mental Health</option>
+          <option value="bipoc">BIPOC Resources</option>
+          <option value="lgbtq">LGBTQ+ Resources</option>
+          <option value="work">Workplace Resources</option>
+          <option value="social">Social Media Resources</option>
+          <option value="selfdefense">Self-Defense & Youth Ed</option>
+          <option value="sexed">Sex Education</option>
+          <option value="abuse">Child/Sexual Abuse Prevention</option>
+          <option value="laws">Laws</option>
+          <option value="care">Find Care</option>
+          <option value="intl">International / UK</option>
+        </select>
+        <button class="fth-clear" type="button" id="fth-clear">Clear</button>
+        <span class="fth-count" aria-live="polite"><strong id="fth-count">0</strong> visible</span>
+      </div>
+    </div>
+
+    <!-- Accordion -->
+    <div class="fth-accordion" id="fth-acc" data-countable>
+      <!-- General Mental Health -->
+      <section class="fth-item" data-category="general" aria-expanded="true">
+        <button class="fth-head" aria-controls="sec-general">
+          <span class="fth-caret">▶</span>
+          <h3>General Mental Health</h3>
+        </button>
+        <div class="fth-body" id="sec-general">
+          <ul class="fth-list">
+            <li class="fth-row fth-it" data-title="ANXIETY & DEPRESSION ASSOCIATION OF AMERICA" data-tags="anxiety,depression,adaa">
+              <div class="fth-title"><a class="fth-link" href="https://adaa.org" target="_blank" rel="noopener">ANXIETY &amp; DEPRESSION ASSOCIATION OF AMERICA (ADAA)</a></div>
+              <p>Works to prevent, treat, and cure anxiety disorders and depression.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="MENTAL HEALTH AMERICA (MHA)" data-tags="mha,screening,advocacy">
+              <div class="fth-title"><a class="fth-link" href="https://mhanational.org" target="_blank" rel="noopener">MENTAL HEALTH AMERICA (MHA)</a></div>
+              <p>Advocacy, education, and tools to promote mental health for all.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="NIMH" data-tags="nimh,research">
+              <div class="fth-title"><a class="fth-link" href="https://nimh.nih.gov" target="_blank" rel="noopener">NATIONAL INSTITUTE OF MENTAL HEALTH (NIMH)</a></div>
+              <p>Leads research to transform the understanding and treatment of mental illness.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="SAMHSA" data-tags="samhsa,behavioral health,substance use">
+              <div class="fth-title"><a class="fth-link" href="https://www.samhsa.gov/" target="_blank" rel="noopener">SUBSTANCE ABUSE AND MENTAL HEALTH SERVICES ADMINISTRATION (SAMHSA)</a></div>
+              <p>U.S. agency advancing behavioral health; treatment locator and 24/7 helplines.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="TWLOHA" data-tags="twloha,community,stories">
+              <div class="fth-title"><a class="fth-link" href="https://twloha.com/" target="_blank" rel="noopener">TO WRITE LOVE ON HER ARMS (TWLOHA)</a></div>
+              <p>Nonprofit movement dedicated to presenting hope and finding help for people struggling with mental health.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="National Council for Mental Wellbeing" data-tags="policy,providers,training">
+              <div class="fth-title"><a class="fth-link" href="https://www.thenationalcouncil.org" target="_blank" rel="noopener">NATIONAL COUNCIL FOR MENTAL WELLBEING</a></div>
+              <p>(Formerly National Council for Behavioral Health) Policy, training, and resources.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Fountain House" data-tags="community,clubhouse,serious mental illness">
+              <div class="fth-title"><a class="fth-link" href="https://fountainhouse.org" target="_blank" rel="noopener">FOUNTAIN HOUSE</a></div>
+              <p>Clubhouse model improving health, housing, and community for people with SMI.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="CDC" data-tags="public health,statistics,guidance">
+              <div class="fth-title"><a class="fth-link" href="https://cdc.gov" target="_blank" rel="noopener">CENTER FOR DISEASE CONTROL (CDC)</a></div>
+              <p>National public health guidance, data, and crisis preparedness.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Safety & Pets -->
+      <section class="fth-item" data-category="general" aria-expanded="false">
+        <button class="fth-head" aria-controls="sec-pets"><span class="fth-caret">▶</span><h3>Safety &amp; Pets</h3></button>
+        <div class="fth-body" id="sec-pets">
+          <ul class="fth-list">
+            <li class="fth-row fth-it" data-title="Animal Welfare Institute — Safety planning for pets of DV survivors" data-tags="pets,domestic violence,awi">
+              <div class="fth-title"><a class="fth-link" href="https://awionline.org" target="_blank" rel="noopener">ANIMAL WELFARE INSTITUTE</a></div>
+              <p>Safety planning for pets of domestic violence survivors.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Safe Havens for Pets" data-tags="shelters,domestic violence,pet foster">
+              <div class="fth-title"><a class="fth-link" href="https://safehavensforpets.org" target="_blank" rel="noopener">SAFE HAVENS FOR PETS</a></div>
+              <p>Directory of programs sheltering animals of domestic violence victims.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Safety Planning with Pets — The Hotline" data-tags="pets,safety,the hotline">
+              <div class="fth-title"><a class="fth-link" href="https://www.thehotline.org/resources/safety-planning-with-pets/" target="_blank" rel="noopener">SAFETY PLANNING WITH PETS</a></div>
+              <p>How to plan for your and your pets’ safety when leaving abuse.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Youth & Relationships -->
+      <section class="fth-item" data-category="general" aria-expanded="false">
+        <button class="fth-head" aria-controls="sec-youth"><span class="fth-caret">▶</span><h3>Youth &amp; Relationships</h3></button>
+        <div class="fth-body" id="sec-youth">
+          <ul class="fth-list">
+            <li class="fth-row fth-it" data-title="Day One" data-tags="teens,dating violence,education">
+              <div class="fth-title"><a class="fth-link" href="https://www.dayoneny.org/our-services" target="_blank" rel="noopener">DAY ONE</a></div>
+              <p>Free and confidential counseling, legal advice, and support for youth experiencing dating abuse.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Love is Respect" data-tags="teens,dating,love is respect">
+              <div class="fth-title"><a class="fth-link" href="https://www.loveisrespect.org/" target="_blank" rel="noopener">LOVE IS RESPECT</a></div>
+              <p>Support, information, and advocacy for young people about healthy relationships.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="AAPI Students Mental Health" data-tags="aapi,students,campus">
+              <div class="fth-title"><a class="fth-link" href="https://www.asianmhc.org/" target="_blank" rel="noopener">MENTAL HEALTH FOR AAPI STUDENTS</a></div>
+              <p>Promotes mental health and wellbeing for AAPI students.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Global Initiative for Boys & Men" data-tags="boys,men,advocacy">
+              <div class="fth-title"><a class="fth-link" href="https://www.gibm.us/" target="_blank" rel="noopener">GLOBAL INITIATIVE FOR BOYS &amp; MEN</a></div>
+              <p>Supporting the wellbeing of boys and men through research and advocacy.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Eating Disorders -->
+      <section class="fth-item" data-category="general" aria-expanded="false">
+        <button class="fth-head" aria-controls="sec-eating"><span class="fth-caret">▶</span><h3>Eating Disorders</h3></button>
+        <div class="fth-body" id="sec-eating">
+          <ul class="fth-list">
+            <li class="fth-row fth-it" data-title="ANAD" data-tags="anad,eating disorder,support">
+              <div class="fth-title"><a class="fth-link" href="https://anad.org" target="_blank" rel="noopener">NATIONAL ASSOCIATION OF ANOREXIA NERVOSA &amp; ASSOCIATED DISORDERS (ANAD)</a></div>
+              <p>Free support services for anyone struggling with an eating disorder.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Recovery & Addiction -->
+      <section class="fth-item" data-category="general" aria-expanded="false">
+        <button class="fth-head" aria-controls="sec-recovery"><span class="fth-caret">▶</span><h3>Recovery &amp; Addiction</h3></button>
+        <div class="fth-body" id="sec-recovery">
+          <ul class="fth-list">
+            <li class="fth-row fth-it" data-title="Recovery Team" data-tags="addiction,alcohol,behavioral">
+              <div class="fth-title"><a class="fth-link" href="#" target="_blank" rel="noopener">RECOVERY TEAM</a></div>
+              <p>Detox, inpatient, and outpatient treatment options.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Internet Addiction & Cyberbullying" data-tags="internet,cyberbullying,addiction">
+              <div class="fth-title"><a class="fth-link" href="#" target="_blank" rel="noopener">THE WORLD OF INTERNET ADDICTION, CYBERBULLYING, AND SUICIDES IN 2021</a></div>
+              <p>Understanding digital risks and routes to help.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Alcohol & Fitness" data-tags="alcohol,fitness,health">
+              <div class="fth-title"><a class="fth-link" href="#" target="_blank" rel="noopener">THE RELATIONSHIP BETWEEN ALCOHOL AND FITNESS</a></div>
+              <p>How alcohol use intersects with physical health goals.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Legal & Advocacy (General) -->
+      <section class="fth-item" data-category="general" aria-expanded="false">
+        <button class="fth-head" aria-controls="sec-legal"><span class="fth-caret">▶</span><h3>Legal &amp; Advocacy</h3></button>
+        <div class="fth-body" id="sec-legal">
+          <ul class="fth-list">
+            <li class="fth-row fth-it" data-title="Legal Momentum" data-tags="women,girls,legal">
+              <div class="fth-title"><a class="fth-link" href="https://www.legalmomentum.org" target="_blank" rel="noopener">LEGAL MOMENTUM</a></div>
+              <p>Legal advocacy for all women and girls to realize their full potential.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Legal Momentum — Get Help" data-tags="legal help,referrals,intake">
+              <div class="fth-title"><a class="fth-link" href="https://www.legalmomentum.org/get-help-form" target="_blank" rel="noopener">LEGAL MOMENTUM — GET HELP</a></div>
+              <p>Free legal information, assistance, and referrals.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Legal Services Corporation" data-tags="civil legal aid,low income">
+              <div class="fth-title"><a class="fth-link" href="https://www.lsc.gov/" target="_blank" rel="noopener">LEGAL SERVICES CORPORATION</a></div>
+              <p>Independent nonprofit funding civil legal aid for low-income Americans.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="WomensLaw.org" data-tags="protective orders,state guides,legal info">
+              <div class="fth-title"><a class="fth-link" href="https://www.womenslaw.org/" target="_blank" rel="noopener">WOMENSLAW.ORG</a></div>
+              <p>Plain-language legal info and state-by-state resources for survivors.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Office of Women's Health — State Resources" data-tags="state programs,anti-violence,womens health">
+              <div class="fth-title"><a class="fth-link" href="https://www.womenshealth.gov/relationships-and-safety/get-help/state-resources" target="_blank" rel="noopener">OFFICE OF WOMEN’S HEALTH — STATE RESOURCES</a></div>
+              <p>State-by-state links to programs working to combat violence against women.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Peace Over Violence — Legal Services" data-tags="legal advocacy,privacy,safety,immigration">
+              <div class="fth-title"><a class="fth-link" href="https://www.peaceoverviolence.org/legal-services" target="_blank" rel="noopener">PEACE OVER VIOLENCE — LEGAL SERVICES</a></div>
+              <p>Free, comprehensive legal services for sexual assault and domestic violence survivors.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- BIPOC -->
+      <section class="fth-item" data-category="bipoc" aria-expanded="false">
+        <button class="fth-head" aria-controls="sec-bipoc"><span class="fth-caret">▶</span><h3>BIPOC Resources</h3></button>
+        <div class="fth-body" id="sec-bipoc">
+          <ul class="fth-list">
+            <li class="fth-row fth-it" data-title="BIPOC Mental Health — MHA" data-tags="training,workshops,diversity,bipoc">
+              <div class="fth-title"><span class="fth-chip">BIPOC</span><a class="fth-link" href="https://mhanational.org/bipoc-mental-health/" target="_blank" rel="noopener">BIPOC MENTAL HEALTH (MHA)</a></div>
+              <p>Resources, tools, and education for Black, Indigenous, and People of Color.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="The Loveland Foundation" data-tags="black women,girls,therapy funding">
+              <div class="fth-title"><a class="fth-link" href="https://thelovelandfoundation.org" target="_blank" rel="noopener">THE LOVELAND FOUNDATION</a></div>
+              <p>Therapy access for Black women and girls.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="MHA: AAPI Communities & Mental Health" data-tags="aapi,education,toolkits">
+              <div class="fth-title"><a class="fth-link" href="https://mhanational.org/issues/asian-americanpacific-islander-communities-and-mental-health" target="_blank" rel="noopener">MHA: AAPI COMMUNITIES &amp; MENTAL HEALTH</a></div>
+              <p>Resources spanning identities, cultures, and needs.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="NAMI: AAPI Resources" data-tags="nami,aapi,support">
+              <div class="fth-title"><a class="fth-link" href="https://www.nami.org/Your-Journey/Identity-and-Cultural-Dimensions/Asian-American-and-Pacific-Islander" target="_blank" rel="noopener">NAMI: AAPI RESOURCES</a></div>
+              <p>Support tools from the National Alliance on Mental Illness.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="ACRS" data-tags="asian,counseling,referrals">
+              <div class="fth-title"><a class="fth-link" href="https://acrs.org" target="_blank" rel="noopener">ASIAN COUNSELING &amp; REFERRAL SERVICES (ACRS)</a></div>
+              <p>Social justice, counseling, and empowerment for Asian American communities.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Asian Mental Health Project" data-tags="asian,education,access">
+              <div class="fth-title"><a class="fth-link" href="https://asianmentalhealthproject.com" target="_blank" rel="noopener">ASIAN MENTAL HEALTH PROJECT</a></div>
+              <p>Resources that make mental healthcare more accessible (not a therapy replacement).</p>
+            </li>
+            <li class="fth-row fth-it" data-title="AAPCHO Resource Guide" data-tags="aapcho,aapi,substance use">
+              <div class="fth-title"><a class="fth-link" href="https://www.aapcho.org/resources_db/mental-health-substance-use-resource-guide/" target="_blank" rel="noopener">AAPCHO: AAPI MENTAL HEALTH &amp; SUBSTANCE USE GUIDE</a></div>
+              <p>Guide for AAPI communities navigating care and support.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="NQTTCN" data-tags="qtpoc,therapists,network">
+              <div class="fth-title"><a class="fth-link" href="https://www.nqttcn.com" target="_blank" rel="noopener">NATIONAL QUEER &amp; TRANS THERAPISTS OF COLOR NETWORK</a></div>
+              <p>Healing justice and therapist directory for QTBIPOC communities.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="NQAPIA Healer Network" data-tags="api,lgbtq,healers">
+              <div class="fth-title"><a class="fth-link" href="https://www.nqapia.org" target="_blank" rel="noopener">NQAPIA: API HEALER NETWORK &amp; THERAPY RESOURCES</a></div>
+              <p>Capacity-building for LGBTQ+ API grassroots groups.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- LGBTQ+ -->
+      <section class="fth-item" data-category="lgbtq" aria-expanded="false">
+        <button class="fth-head" aria-controls="sec-lgbtq"><span class="fth-caret">▶</span><h3>LGBTQ+ Resources</h3></button>
+        <div class="fth-body" id="sec-lgbtq">
+          <ul class="fth-list">
+            <li class="fth-row fth-it" data-title="Family Acceptance Project" data-tags="families,lgbtq,youth">
+              <div class="fth-title"><a class="fth-link" href="https://familyproject.sfsu.edu" target="_blank" rel="noopener">FAMILY ACCEPTANCE PROJECT</a></div>
+              <p>Prevents health risks and promotes wellbeing for LGBTQ+ youth.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="It Gets Better" data-tags="youth,storytelling,global">
+              <div class="fth-title"><a class="fth-link" href="https://itgetsbetter.org" target="_blank" rel="noopener">IT GETS BETTER PROJECT</a></div>
+              <p>Uplifts and connects LGBTQ+ youth worldwide.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="The Trevor Project" data-tags="crisis,988 alternative,lifeline">
+              <div class="fth-title"><a class="fth-link" href="https://www.thetrevorproject.org" target="_blank" rel="noopener">THE TREVOR PROJECT</a></div>
+              <p>24/7 crisis support and resources for LGBTQ+ youth.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Trans Family Support Services" data-tags="training,schools,medical">
+              <div class="fth-title"><a class="fth-link" href="https://transfamilysos.org" target="_blank" rel="noopener">TRANS FAMILY SUPPORT SERVICES</a></div>
+              <p>Gender competency training for workplaces, schools, and medical orgs.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Trans Lifeline" data-tags="peer support,trans,hotline">
+              <div class="fth-title"><a class="fth-link" href="https://translifeline.org" target="_blank" rel="noopener">TRANS LIFELINE</a></div>
+              <p>Peer support and resources by and for trans people.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Trans Student Educational Resources" data-tags="students,education,advocacy">
+              <div class="fth-title"><a class="fth-link" href="https://transstudent.org" target="_blank" rel="noopener">TRANS STUDENT EDUCATIONAL RESOURCES</a></div>
+              <p>Youth-led organization transforming educational environments.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Anti-Violence Project (AVP)" data-tags="avp,lgbtq,survivor support">
+              <div class="fth-title"><a class="fth-link" href="https://avp.org/get-help/" target="_blank" rel="noopener">ANTI-VIOLENCE PROJECT (AVP)</a></div>
+              <p>Counseling and advocacy for LGBTQ+ and HIV-affected survivors.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Workplace -->
+      <section class="fth-item" data-category="work" aria-expanded="false">
+        <button class="fth-head" aria-controls="sec-work"><span class="fth-caret">▶</span><h3>Workplace Resources</h3></button>
+        <div class="fth-body" id="sec-work">
+          <ul class="fth-list">
+            <li class="fth-row fth-it" data-title="Empower Work" data-tags="coaching,peer counselors,work stress">
+              <div class="fth-title"><a class="fth-link" href="https://www.empowerwork.org" target="_blank" rel="noopener">EMPOWER WORK</a></div>
+              <p>Peer counselors supporting you through tough work situations.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="EEOC — Depression, PTSD & Other Mental Health Conditions in the Workplace" data-tags="eeoc,accommodations,rights">
+              <div class="fth-title"><a class="fth-link" href="https://www.eeoc.gov/laws/guidance/depression-ptsd-other-mental-health-conditions-workplace-your-legal-rights" target="_blank" rel="noopener">EQUAL EMPLOYMENT OPPORTUNITY COMMISSION (EEOC)</a></div>
+              <p>Your legal rights and accommodations for mental health at work.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Verywell Mind — Toxic Work Environments" data-tags="toxic work,mental health,guide">
+              <div class="fth-title"><a class="fth-link" href="https://www.verywellmind.com" target="_blank" rel="noopener">VERYWELL MIND</a></div>
+              <p>How a toxic workplace affects mental health—and what to do.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Social Media -->
+      <section class="fth-item" data-category="social" aria-expanded="false">
+        <button class="fth-head" aria-controls="sec-social"><span class="fth-caret">▶</span><h3>Social Media Resources</h3></button>
+        <div class="fth-body" id="sec-social">
+          <ul class="fth-list">
+            <li class="fth-row fth-it" data-title="HuffPost — 14 Mental Health Instagram Accounts" data-tags="instagram,wellness,content">
+              <div class="fth-title"><a class="fth-link" href="#" target="_blank" rel="noopener">HUFFINGTON POST</a></div>
+              <p>“14 Mental Health Instagram Accounts You Should Follow ASAP.”</p>
+            </li>
+            <li class="fth-row fth-it" data-title="The Good Trade — 9 Instagram Accounts" data-tags="instagram,advocacy,education">
+              <div class="fth-title"><a class="fth-link" href="#" target="_blank" rel="noopener">THE GOOD TRADE</a></div>
+              <p>“9 Instagram Accounts Changing the Conversation Around Mental Health.”</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Self-Defense & Youth Education -->
+      <section class="fth-item" data-category="selfdefense" aria-expanded="false">
+        <button class="fth-head" aria-controls="sec-selfdef"><span class="fth-caret">▶</span><h3>Self-Defense &amp; Youth Education</h3></button>
+        <div class="fth-body" id="sec-selfdef">
+          <ul class="fth-list">
+            <li class="fth-row fth-it" data-title="Right To Be" data-tags="bystander,harassment,training">
+              <div class="fth-title"><a class="fth-link" href="https://righttobe.org" target="_blank" rel="noopener">RIGHT TO BE</a></div>
+              <p>Bystander intervention and harassment-response training.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Fighting Chance Seattle" data-tags="self defense,women,seattle">
+              <div class="fth-title"><a class="fth-link" href="https://fightingchanceseattle.com" target="_blank" rel="noopener">FIGHTING CHANCE SEATTLE</a></div>
+              <p>Monthly women’s self-defense workshops (Seattle area).</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Sex Education -->
+      <section class="fth-item" data-category="sexed" aria-expanded="false">
+        <button class="fth-head" aria-controls="sec-sexed"><span class="fth-caret">▶</span><h3>Sex Education</h3></button>
+        <div class="fth-body" id="sec-sexed">
+          <ul class="fth-list">
+            <li class="fth-row fth-it" data-title="Sex Education Collaborative" data-tags="curriculum,training,schools">
+              <div class="fth-title"><a class="fth-link" href="https://sexeducationcollaborative.org" target="_blank" rel="noopener">SEX EDUCATION COLLABORATIVE</a></div>
+              <p>Quality sex ed resources and training for educators and organizations.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Child Abuse / Sexual Abuse Prevention -->
+      <section class="fth-item" data-category="abuse" aria-expanded="false">
+        <button class="fth-head" aria-controls="sec-abuse"><span class="fth-caret">▶</span><h3>Child Abuse / Sexual Abuse Prevention</h3></button>
+        <div class="fth-body" id="sec-abuse">
+          <ul class="fth-list">
+            <li class="fth-row fth-it" data-title="National Domestic Violence Hotline" data-tags="dv,hotline,crisis">
+              <div class="fth-title"><a class="fth-link" href="https://www.thehotline.org/" target="_blank" rel="noopener">NATIONAL DOMESTIC VIOLENCE HOTLINE</a></div>
+              <p>Free, confidential, 24/7 support. Call <strong>1-800-799-SAFE</strong> (TTY 1-800-787-3224) or text <strong>START</strong> to <strong>88788</strong>.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="DomesticShelters.org" data-tags="shelters,dv,locator">
+              <div class="fth-title"><a class="fth-link" href="https://www.domesticshelters.org/" target="_blank" rel="noopener">DOMESTIC SHELTERS</a></div>
+              <p>Find domestic violence programs and shelters across the U.S.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="ChildHelp National Child Abuse Hotline" data-tags="child abuse,hotline,resources">
+              <div class="fth-title"><a class="fth-link" href="https://www.childhelp.org/hotline/" target="_blank" rel="noopener">CHILDHELP</a></div>
+              <p>24/7 crisis intervention, information, and referrals.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Herman Law — Child Sexual Abuse Resources" data-tags="child sexual abuse,education,trauma">
+              <div class="fth-title"><a class="fth-link" href="https://hermanlaw.com/child-sex-abuse/" target="_blank" rel="noopener">CHILD SEXUAL ABUSE RESOURCES — HERMAN LAW</a></div>
+              <p>Information on symptoms, long-term effects, and healing from trauma.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Safe Horizon" data-tags="dv,shelter,legal,counseling">
+              <div class="fth-title"><a class="fth-link" href="https://www.safehorizon.org/our-services/what-we-do/" target="_blank" rel="noopener">SAFE HORIZON</a></div>
+              <p>Legal and court programs, DV shelters, counseling center, and hotlines.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Sanctuary for Families — Get Help" data-tags="dv,sex trafficking,legal">
+              <div class="fth-title"><a class="fth-link" href="https://sanctuaryforfamilies.org/get-help/" target="_blank" rel="noopener">SANCTUARY FOR FAMILIES</a></div>
+              <p>Courtroom advocates, family law, crisis & transitional shelters, counseling.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Mercy House — Get Help" data-tags="shelter,counseling,advocacy">
+              <div class="fth-title"><a class="fth-link" href="https://mercyhousesite.org/get-help/" target="_blank" rel="noopener">MERCY HOUSE</a></div>
+              <p>Helps survivors of DV and sexual assault with shelter, counseling, and advocacy.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Safe Home (Good Shepherds)" data-tags="training,education,spanish,LGBTQ">
+              <div class="fth-title"><a class="fth-link" href="https://goodshepherds.org/program/safe-homes/" target="_blank" rel="noopener">SAFE HOME</a></div>
+              <p>Consultation, training, and targeted services incl. youth, Spanish-speakers, and LGBTQ survivors.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Violence Intervention Program" data-tags="latina,dv,services">
+              <div class="fth-title"><a class="fth-link" href="https://www.vipmujeres.org/get-help/" target="_blank" rel="noopener">VIOLENCE INTERVENTION PROGRAM</a></div>
+              <p>Leads Latina survivors to safety and independence.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Womankind — Get Help" data-tags="dv,trafficking,sexual violence">
+              <div class="fth-title"><a class="fth-link" href="https://www.iamwomankind.org/get-help/" target="_blank" rel="noopener">WOMANKIND</a></div>
+              <p>Helpline advocates answer questions on DV, trafficking, and sexual violence.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="StrongHearts Native Helpline" data-tags="native,domestic violence,dating violence">
+              <div class="fth-title"><a class="fth-link" href="https://www.strongheartshelpline.org/about/" target="_blank" rel="noopener">STRONGHEARTS NATIVE HELPLINE</a></div>
+              <p>Support for Native Americans affected by domestic and dating violence.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Find Care -->
+      <section class="fth-item" data-category="care" aria-expanded="false">
+        <button class="fth-head" aria-controls="sec-care"><span class="fth-caret">▶</span><h3>Find a Mental Care Professional</h3></button>
+        <div class="fth-body" id="sec-care">
+          <ul class="fth-list">
+            <li class="fth-row fth-it" data-title="Consult a Doctor" data-tags="telehealth,consultation,doctor">
+              <div class="fth-title"><a class="fth-link" href="#" target="_blank" rel="noopener">CONSULT A DOCTOR</a></div>
+              <p>Explore telehealth options to connect with licensed clinicians.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- LAWS (REVENGE PORN + STALKING) -->
+      <section class="fth-item" data-category="laws" aria-expanded="false">
+        <button class="fth-head" aria-controls="sec-laws">
+          <span class="fth-caret">▶</span>
+          <h3>Laws: Revenge Porn &amp; Stalking</h3>
+        </button>
+        <div class="fth-body" id="sec-laws">
+          <ul class="fth-list">
+            <li class="fth-row fth-it" data-title="WomensLaw — Revenge Porn" data-tags="privacy,non-consensual images,legal">
+              <div class="fth-title"><a class="fth-link" href="https://www.womenslaw.org/" target="_blank" rel="noopener">REVENGE PORN LAWS</a></div>
+              <p>Overview of legal protections against non-consensual image sharing; how to seek help.</p>
+              <div class="fth-tags">
+                <span class="fth-tag">Legal Protections</span><span class="fth-tag">Victim Support</span><span class="fth-tag">Digital Safety</span>
+              </div>
+            </li>
+            <li class="fth-row fth-it" data-title="WomensLaw — Stalking" data-tags="harassment,restraining orders,criminal">
+              <div class="fth-title"><a class="fth-link" href="https://www.womenslaw.org/" target="_blank" rel="noopener">STALKING LAWS</a></div>
+              <p>Safeguards against persistent harassment, including orders of protection and criminal penalties.</p>
+              <div class="fth-tags">
+                <span class="fth-tag">Safety Planning</span><span class="fth-tag">Documentation</span><span class="fth-tag">Law Enforcement</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- International / UK -->
+      <section class="fth-item" data-category="intl" aria-expanded="false">
+        <button class="fth-head" aria-controls="sec-intl"><span class="fth-caret">▶</span><h3>International / UK</h3></button>
+        <div class="fth-body" id="sec-intl">
+          <ul class="fth-list">
+            <li class="fth-row fth-it" data-title="Revenge Porn Helpline (UK)" data-tags="uk,image-based abuse,legal">
+              <div class="fth-title"><a class="fth-link" href="https://revengepornhelpline.org.uk/" target="_blank" rel="noopener">REVENGE PORN HELPLINE (UK)</a></div>
+              <p>Support and guidance for victims of image-based sexual abuse in the UK.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Victim Support UK — Image-based Sexual Abuse" data-tags="uk,victim support,image-based abuse">
+              <div class="fth-title"><a class="fth-link" href="https://www.victimsupport.org.uk/crime-info/types-crime/image-based-sexual-abuse/#:~:text=If%20you%20decide%20to%20report,Helpline%20on%200345%206000%20459." target="_blank" rel="noopener">VICTIM SUPPORT (UK)</a></div>
+              <p>How to report, remove content, and get support in the UK.</p>
+            </li>
+            <li class="fth-row fth-it" data-title="Find a Helpline (IASP)" data-tags="global,helplines,directory">
+              <div class="fth-title"><a class="fth-link" href="https://findahelpline.com/i/iasp" target="_blank" rel="noopener">FIND A HELPLINE (GLOBAL)</a></div>
+              <p>International directory of mental health and crisis helplines.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer CTA -->
+    <footer class="fth-footer">
+      <span>Want to help us expand and maintain this guide?</span>
+      <a class="fth-btn" href="https://fitnesshacksforlife.org/donate/" target="_blank" rel="noopener">💙 Donate to FHL</a>
+    </footer>
+  </div>
+
+  <script>
+    (function(){
+      "use strict";
+      const root = document.getElementById('fth-resources');
+      if(!root) return;
+
+      // Accordion toggle
+      root.querySelectorAll('.fth-item .fth-head').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const item = btn.closest('.fth-item');
+          const open = item.getAttribute('aria-expanded') === 'true';
+          item.setAttribute('aria-expanded', String(!open));
+          updateCount();
+        });
+      });
+
+      // Search & filter
+      const q = root.querySelector('#fth-q');
+      const cat = root.querySelector('#fth-cat');
+      const clear = root.querySelector('#fth-clear');
+      const countEl = root.querySelector('#fth-count');
+      const items = Array.from(root.querySelectorAll('.fth-row.fth-it'));
+
+      function normalize(s){ return (s||'').toString().toLowerCase().trim(); }
+
+      function applyFilters(){
+        const term = normalize(q.value);
+        const catVal = (cat && cat.value) ? cat.value : 'all';
+
+        let visible = 0;
+
+        items.forEach(row=>{
+          const section = row.closest('.fth-item');
+          const sectionCat = section ? section.getAttribute('data-category') : 'general';
+
+          const title = normalize(row.getAttribute('data-title'));
+          const tags = normalize(row.getAttribute('data-tags'));
+          const matchesText = !term || title.includes(term) || tags.includes(term);
+          const matchesCat = (catVal === 'all') || (sectionCat === catVal);
+
+          const show = matchesText && matchesCat;
+          row.style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+
+        // Hide entire section bodies if zero visible rows (but keep head)
+        root.querySelectorAll('.fth-item').forEach(sec=>{
+          const rows = sec.querySelectorAll('.fth-row.fth-it');
+          const anyVisible = Array.from(rows).some(r => r.style.display !== 'none');
+          const body = sec.querySelector('.fth-body');
+          if (body) body.style.display = sec.getAttribute('aria-expanded') === 'true' ? (anyVisible ? '' : 'none') : 'none';
+        });
+
+        if (countEl) countEl.textContent = String(visible);
+      }
+
+      function updateCount(){
+        const visible = Array.from(root.querySelectorAll('.fth-row.fth-it')).filter(r => r.style.display !== 'none').length;
+        const countEl = root.querySelector('#fth-count');
+        if (countEl) countEl.textContent = String(visible);
+      }
+
+      q && q.addEventListener('input', applyFilters);
+      cat && cat.addEventListener('change', applyFilters);
+      clear && clear.addEventListener('click', ()=>{
+        if (q) q.value = '';
+        if (cat) cat.value = 'all';
+        root.querySelectorAll('.fth-item').forEach(sec=>sec.setAttribute('aria-expanded','true'));
+        applyFilters();
+      });
+
+      // Initialize
+      applyFilters();
+    })();
+  </script>
+</section>
