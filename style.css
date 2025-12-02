@@ -1651,7 +1651,7 @@ body.modal-open {
   .dots {
     gap: 6px;
     padding: 8px;
-    margin-top: 20px;
+    margin-top: 32px;
     border-radius: 12px;
   }
 
