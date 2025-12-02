@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/socks/No_Show_Tab_Ultra-LightWeight-removebg-preview.png',
     leftText: `
      <div class="product-detail">
-        <span class="badge">Premium</span>
+   
         <h2>Darn Tough</h2>
         <div class="features">
           <span class="feature-tag">🍃 Ultra Lightweight</span>
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/socks/no-show-jocology.jpg',
     leftText: `
     <div class="product-detail">
-  <span class="badge">Performance</span>
+
   <h2>Jogology Socks</h2>
   <div class="features">
     <span class="feature-tag">♻️ Sustainable Re-Dri™ Yarn</span>
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/socks/balega-hidden-comfort.jpg',
     leftText: `
     <div class="product-detail">
-  <span class="badge">Performance</span>
+
   <h2>Balega</h2>
   <div class="features">
     <span class="feature-tag">🇺🇸 Drynamix™ Moisture Management</span>
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/cold/Luxe_Thermal_Headband-removebg-preview.png',
     leftText: `
      <div class="product-detail">
-  <span class="badge">Winter</span>
+  
   <h2>Thermal Headbands</h2>
   <div class="features">
     <span class="feature-tag">❄️ Windproof Exterior</span>
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/cold/Womens-Oh-Mega-Fur-Pom-Lined-Beanie.jpg',
     leftText: `
      <div class="product-detail">
-  <span class="badge">Winter</span>
+  
   <h2>Running Beanies</h2>
   <div class="features">
     <span class="feature-tag">🧣 Cozy</span>
@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/cold/Fusion_Midweight_Glove_2.0-removebg-preview.png',
     leftText: `
     <div class="product-detail">
-  <span class="badge">Winter</span>
+ 
   <h2>Running Gloves</h2>
   <div class="features">
     <span class="feature-tag">📱 Touchscreen</span>
@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/jacket/northface/lifestyle-northface-removebg-preview.png',
     leftText: `
      <div class="product-detail">
-  <span class="badge">Outerwear</span>
+ 
   <h2>The North Face</h2>
   <div class="features">
     <span class="feature-tag">💧 FUTURELIGHT™ Waterproof</span>
@@ -312,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/jacket/asics/asic-jacket-removebg-preview.png',
     leftText: `
      <div class="product-detail">
-  <span class="badge">Outerwear</span>
+
   <h2>Asics</h2>
   <div class="features">
     <span class="feature-tag">💨 Laser-Cut Ventilation</span>
@@ -341,7 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/jacket/brooks/brooks-jacket-removebg-preview.png',
     leftText: `
      <div class="product-detail">
-  <span class="badge">Outerwear</span>
+  
   <h2>Brooks Jackets</h2>
   <div class="features">
     <span class="feature-tag">💧 DriLayer® Seal</span>
@@ -373,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/warm-layers/saucony-truimph-lifestyle-removebg-preview.png',
     leftText: `
       <div class="product-detail">
-  <span class="badge">Layers</span>
+ 
   <h2>Thermal Base Layers</h2>
   <div class="features">
     <span class="feature-tag">💧 Moisture-Wicking</span>
@@ -429,7 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/warm-layers/tights/thermal-pants-removebg-preview.png',
     leftText: `
    <div class="product-detail">
-  <span class="badge">Layers</span>
+ 
   <h2>Tights</h2>
   <div class="features">
     <span class="feature-tag">🔥 Thermal Insulation</span>
@@ -467,7 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/warm-layers/long-sleeve/new-balance-athletic-long-removebg-preview.png',
     leftText: `
      <div class="product-detail">
-  <span class="badge">Layers</span>
+ 
   <h2>Long Sleeve Tops</h2>
   <div class="features">
     <span class="feature-tag">💧 Moisture-Wicking</span>
@@ -510,7 +510,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/nutrition/jelly.webp',
     leftText: `
      <div class="product-detail">
-  <span class="badge">Fuel</span>
+ 
   <h2>Chews</h2>
   <div class="features">
     <span class="feature-tag">⚡ Fast-Acting Carbs</span>
@@ -568,7 +568,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/nutrition/untapped-gel.webp',
     leftText: `
       <div class="product-detail">
-  <span class="badge">Fuel</span>
+ 
   <h2>Gels</h2>
   <div class="features">
     <span class="feature-tag">⚡ Fast-Absorbing Carbs</span>
@@ -637,7 +637,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/nutrition/nuun.webp',
     leftText: `
      <div class="product-detail">
-  <span class="badge">Fuel</span>
+
   <h2>Recovery Nutrition</h2>
   <div class="features">
     <span class="feature-tag">🥤 Carb-Protein Ratio 3:1</span>
@@ -728,7 +728,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/electronics/shokz-openswim.webp',
     leftText: `
      <div class="product-detail">
-  <span class="badge">Tech</span>
+
   <h2>Headphones</h2>
   <div class="features">
     <span class="feature-tag">💧 IPX4-IPX7 Sweat-Resistant</span>
@@ -759,7 +759,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/electronics/forerunner.webp',
     leftText: `
      <div class="product-detail">
-  <span class="badge">Tech</span>
+
   <h2>Garmin Watches</h2>
   <div class="features">
     <span class="feature-tag">📊 Advanced Metrics</span>
@@ -790,7 +790,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/electronics/theragun-prim.webp',
     leftText: `
     <div class="product-detail">
-  <span class="badge">Tech</span>
+ 
   <h2>Massage Guns</h2>
   <div class="features">
     <span class="feature-tag">💪 Deep Tissue Relief</span>
@@ -822,7 +822,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/lululemon/Pace-Breaker-Ripstop-Jacket-lulu-removebg-preview.png',
     leftText: `
     <div class="product-detail">
-  <span class="badge">Apparel</span>
+
   <h2>Lululemon Jackets</h2>
   <div class="features">
     <span class="feature-tag">🌧️ Weather Resistant</span>
@@ -852,7 +852,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/lululemon/to_train-lulu-removebg-preview.png',
     leftText: `
       <div class="product-detail">
-  <span class="badge">Apparel</span>
+  
   <h2>Warm Layers</h2>
   <div class="features">
     <span class="feature-tag">🔥 Thermal Insulation</span>
@@ -883,7 +883,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/lululemon/high-rise-removebg-preview.png',
     leftText: `
      <div class="product-detail">
-  <span class="badge">Apparel</span>
+
   <h2>Pants</h2>
   <div class="features">
     <span class="feature-tag">🏃 Flexible Fit</span>
@@ -915,7 +915,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/rabbit/warm_up-rabbit-removebg-preview.png',
     leftText: `
       <div class="product-detail">
-  <span class="badge">Rabbit</span>
+ 
   <h2>Rabbit Jackets</h2>
   <div class="features">
     <span class="feature-tag">🪶 Ultralight Construction</span>
@@ -946,7 +946,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/rabbit/defroster-removebg-preview.png',
     leftText: `
     <div class="product-detail">
-  <span class="badge">Rabbit</span>
+  
   <h2>Rabbit Gear</h2>
   <div class="features">
     <span class="feature-tag">🎽 Performance Shorts</span>
@@ -977,7 +977,7 @@ document.addEventListener('DOMContentLoaded', () => {
     rightImg: 'image/rabbit/layer-one-pink-removebg-preview.png',
     leftText: `
    <div class="product-detail">
-  <span class="badge">Rabbit</span>
+ 
   <h2>Rabbit Long Sleeve</h2>
   <div class="features">
     <span class="feature-tag">☀️ Sun Protection</span>
@@ -1328,4 +1328,5 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   console.log('[modal] Setup complete');
+
 });
