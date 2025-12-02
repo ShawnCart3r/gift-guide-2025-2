@@ -1532,18 +1532,19 @@ body.modal-open {
 
   .stage {
     padding: 8px;
+    padding-top: 4px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .topbar {
     padding: 8px 12px;
     gap: 8px;
     border-radius: 12px;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     flex-wrap: wrap;
     width: 100%;
     max-width: 100%;
