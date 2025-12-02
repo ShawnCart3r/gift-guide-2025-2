@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileScrollSupport: false,
     swipeDistance: 50,
     clickEventForward: true,
-    disableFlipByClick: true,
+    disableFlipByClick: false, // CHANGED: Allow clicking to flip
     usePortrait: true,
     autoSize: true,
   });
@@ -168,15 +168,51 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('Initial page index:', flipbook.getCurrentPageIndex());
 
   // ========================================
-  // FORCE LINKS INSIDE BOOK TO NAVIGATE (MOBILE + DESKTOP)
+  // INTERACTIVE ELEMENTS INSIDE PAGES
+  // Only prevent flips for elements INSIDE the pages, not navigation controls
+  // ========================================
+  const interactiveSelector = '.gear-tile, .info-tile, .page a, .page button, .page [role="button"]';
+  
+  // Prevent page flips when clicking interactive content inside pages
+  book.addEventListener('mousedown', e => {
+    // Check if it's inside a page AND matches interactive selector
+    const page = e.target.closest('.page');
+    if (page && e.target.closest(interactiveSelector)) {
+      console.log('Blocked flip - interactive element clicked');
+      e.stopPropagation();
+    }
+  }, true);
+
+  book.addEventListener('mouseup', e => {
+    const page = e.target.closest('.page');
+    if (page && e.target.closest(interactiveSelector)) {
+      e.stopPropagation();
+    }
+  }, true);
+
+  book.addEventListener('touchstart', e => {
+    const page = e.target.closest('.page');
+    if (page && e.target.closest(interactiveSelector)) {
+      console.log('Blocked flip - interactive element touched');
+      e.stopPropagation();
+    }
+  }, { capture: true, passive: false });
+
+  // ========================================
+  // FORCE LINKS INSIDE PAGES TO NAVIGATE
   // ========================================
   book.addEventListener('click', (e) => {
     const link = e.target.closest('a[href]');
     if (!link) return;
+    
+    // Only handle links inside pages, not navigation links
+    const page = link.closest('.page');
+    if (!page) return;
 
     const href = link.getAttribute('href');
     if (!href || href === '#') return;
 
+    console.log('Link clicked:', href);
     e.preventDefault();
     e.stopPropagation();
 
@@ -189,30 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, true);
 
   // ========================================
-  // PREVENT FLIPS ON INTERACTIVE ELEMENTS
-  // ========================================
-  const interactiveSelector = '.gear-tile, .info-tile, button, a, [role="button"]';
-  
-  book.addEventListener('mousedown', e => {
-    if (e.target.closest(interactiveSelector)) {
-      e.stopPropagation();
-    }
-  }, true);
-
-  book.addEventListener('mouseup', e => {
-    if (e.target.closest(interactiveSelector)) {
-      e.stopPropagation();
-    }
-  }, true);
-
-  book.addEventListener('touchstart', e => {
-    if (e.target.closest(interactiveSelector)) {
-      e.stopPropagation();
-    }
-  }, { capture: true, passive: false });
-
-  // ========================================
-  // FLIP STATE CONTROL - SIMPLIFIED
+  // FLIP STATE CONTROL
   // ========================================
   let flipping = false;
 
@@ -234,7 +247,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Flip ended, buttons enabled');
   }
 
-  // Safety timeout to prevent permanent lock
   function safeFlip(action, actionName = 'flip') {
     if (!canFlip()) {
       console.log('Flip blocked - already flipping');
@@ -246,7 +258,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     startFlip();
 
-    // Safety timeout
     const safetyTimer = setTimeout(() => {
       console.warn('Flip safety timeout triggered');
       endFlip();
@@ -254,11 +265,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       action();
-      // Clear safety timer after a short delay to allow flip to complete
       setTimeout(() => {
         clearTimeout(safetyTimer);
         endFlip();
-      }, 700); // Slightly longer than flippingTime
+      }, 700);
     } catch (error) {
       console.error('Flip error:', error);
       clearTimeout(safetyTimer);
@@ -298,34 +308,41 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ========================================
-  // NAVIGATION
+  // NAVIGATION BUTTONS
   // ========================================
-  prevBtn?.addEventListener('click', (e) => {
-    console.log('Prev button clicked');
-    e.preventDefault();
-    const currentPage = flipbook.getCurrentPageIndex();
-    if (currentPage > 0) {
-      safeFlip(() => flipbook.flipPrev(), 'flipPrev');
-    } else {
-      console.log('Already at first page');
-    }
-  });
+  if (prevBtn) {
+    prevBtn.addEventListener('click', (e) => {
+      console.log('Prev button clicked');
+      e.preventDefault();
+      e.stopPropagation(); // Stop this from reaching the book
+      const currentPage = flipbook.getCurrentPageIndex();
+      if (currentPage > 0) {
+        safeFlip(() => flipbook.flipPrev(), 'flipPrev');
+      } else {
+        console.log('Already at first page');
+      }
+    });
+  }
 
-  nextBtn?.addEventListener('click', (e) => {
-    console.log('Next button clicked');
-    e.preventDefault();
-    const currentPage = flipbook.getCurrentPageIndex();
-    if (currentPage < total - 1) {
-      safeFlip(() => flipbook.flipNext(), 'flipNext');
-    } else {
-      console.log('Already at last page');
-    }
-  });
+  if (nextBtn) {
+    nextBtn.addEventListener('click', (e) => {
+      console.log('Next button clicked');
+      e.preventDefault();
+      e.stopPropagation(); // Stop this from reaching the book
+      const currentPage = flipbook.getCurrentPageIndex();
+      if (currentPage < total - 1) {
+        safeFlip(() => flipbook.flipNext(), 'flipNext');
+      } else {
+        console.log('Already at last page');
+      }
+    });
+  }
 
   dots.forEach(dot => {
-    dot.addEventListener('click', () => {
+    dot.addEventListener('click', (e) => {
+      console.log('Dot clicked');
+      e.stopPropagation(); // Stop this from reaching the book
       const idx = Number(dot.dataset.index);
-      console.log('Dot clicked, target page:', idx);
       if (!isNaN(idx)) {
         safeFlip(() => flipbook.flip(idx), `flip to ${idx}`);
       }
@@ -364,7 +381,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const FLIP_THRESHOLD = 50;
 
   function startDrag(x, y, target) {
-    if (target.closest(interactiveSelector) || flipping) return false;
+    // Don't start drag on interactive elements inside pages
+    const page = target.closest('.page');
+    if (page && target.closest(interactiveSelector)) return false;
+    if (flipping) return false;
     
     dragX = x;
     dragY = y;
@@ -443,8 +463,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Touch events
   book.addEventListener('touchstart', e => {
-    if (e.target.closest(interactiveSelector)) return;
-    
     const touch = e.touches[0];
     if (startDrag(touch.clientX, touch.clientY, e.target)) {
       hideHints();
