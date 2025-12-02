@@ -2297,3 +2297,32 @@ body.modal-open {
   background: transparent !important;
   box-shadow: none !important;
 }
+/* === MOBILE PAGE HEIGHT FIX (OVERRIDE) === */
+@media (max-width: 768px) {
+  /* Lock the book height and let pages fill it */
+  .book {
+    height: min(60vh, 520px);
+    max-height: 60vh;
+    aspect-ratio: auto; /* override old aspect-ratio */
+  }
+
+  /* Make PageFlip and each page use 100% of that space */
+  .stf__wrapper,
+  .stf__block,
+  .stf__page,
+  .stf__item,
+  .page {
+    height: 100% !important;
+  }
+
+  /* Center the content vertically like on the “good” pages */
+  .page {
+    justify-content: center;
+  }
+
+  /* Ensure the 2×2 grid stretches nicely */
+  .gear-gallery {
+    flex: 1 1 auto;
+  }
+}
+
