@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   'socks-darntough': {
     leftImg: 'image/logos/darn-tough-2.jpg',
-    rightImg: 'image/socks/No_Show_Tab_Ultra-LightWeight-removebg-preview.png',
+  rightImg: 'image/socks/darn-tough-red.jpg',
     leftText: `
      <div class="product-detail">
    
@@ -1330,3 +1330,4 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('[modal] Setup complete');
 
 });
+
